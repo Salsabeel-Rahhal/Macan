@@ -1,6 +1,8 @@
 import { DateTime } from "luxon";
+import Hash from "@ioc:Adonis/Core/Hash";
 import {
   BaseModel,
+  beforeSave,
   BelongsTo,
   belongsTo,
   column,
@@ -15,11 +17,8 @@ export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
-  @column({ serializeAs: "first_name" })
-  public firstName: string;
-
-  @column({ serializeAs: "last_name" })
-  public lastName: string;
+  @column({ serializeAs: "user_name" })
+  public userName: string;
 
   @column({ serializeAs: "email" })
   public email: string;
@@ -62,4 +61,11 @@ export default class User extends BaseModel {
     foreignKey: "shopId",
   })
   public ShopId: HasMany<typeof Shop>;
+
+  @beforeSave()
+  public static async hashPassword(user: User) {
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password);
+    }
+  }
 }

@@ -59,6 +59,6 @@ Route.group(() => {
   Route.get("/", "UsersController.getUsers");
   Route.post("/signUp", "UsersController.signUp");
   Route.post("/signIn", "UsersController.signIn");
-  Route.put("/:id", "UsersController.update");
+  Route.put("/:id", "UsersController.updateProfile");
   Route.delete("/:id", "UsersController.destroy");
 }).prefix("/users");
