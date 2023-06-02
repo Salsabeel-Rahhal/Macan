@@ -23,28 +23,46 @@ export default class UsersController {
     }
   }
   async signUp({ auth, request, response }: HttpContextContract) {
-    const signUp = schema.create({
-      user_name: schema.string(),
+    const createSchema = schema.create({
       email: schema.string([
         rules.email(),
         rules.unique({ table: "users", column: "email" }),
       ]),
       password: schema.string([rules.minLength(8)]),
-      phone_number: schema.string(),
-      country: schema.string(),
     });
-    const payload = await request.validate({ schema: signUp });
+
+    const payload = await request.validate({ schema: createSchema });
+
     const user = new User();
-    user.userName = payload.user_name;
     user.email = payload.email;
     user.password = payload.password;
-    user.phoneNumber = payload.phone_number;
-    user.country = payload.country;
-    var newUser = await user.save();
-    const token = await auth
-      .use("api")
-      .attempt(payload.email, payload.password);
+
+    await user.save();
+    const token = await auth.attempt(payload.email, payload.password);
+
     return token;
+    // const signUp = schema.create({
+    //   // user_name: schema.string(),
+    //   email: schema.string([
+    //     rules.email(),
+    //     rules.unique({ table: "users", column: "email" }),
+    //   ]),
+    //   password: schema.string([rules.minLength(8)]),
+    //   // phone_number: schema.string(),
+    //   // country: schema.string(),
+    // });
+    // const payload = await request.validate({ schema: signUp });
+    // const user = new User();
+    // // user.userName = payload.user_name;
+    // user.email = payload.email;
+    // user.password = payload.password;
+    // // user.phoneNumber = payload.phone_number;
+    // // user.country = payload.country;
+    // var newUser = await user.save();
+    // const token = await auth
+    //   .use("api")
+    //   .attempt(payload.email, payload.password);
+    // return token;
   }
 
   public async updateProfile(ctx: HttpContextContract) {

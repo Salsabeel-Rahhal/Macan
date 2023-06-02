@@ -17,17 +17,17 @@ export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
-  @column({ serializeAs: "user_name" })
-  public userName: string;
+  // @column({ serializeAs: "user_name" })
+  // public userName: string;
 
   @column({ serializeAs: "email" })
   public email: string;
 
-  @column({ serializeAs: "phone_number" })
-  public phoneNumber: string;
+  // @column({ serializeAs: "phone_number" })
+  // public phoneNumber: string;
 
-  @column({ serializeAs: "country" })
-  public country: string;
+  // @column({ serializeAs: "country" })
+  // public country: string;
 
   @column({ serializeAs: "password" })
   public password: string;
