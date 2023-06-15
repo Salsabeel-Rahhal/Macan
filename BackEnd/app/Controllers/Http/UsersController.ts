@@ -1,7 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { schema, rules, validator } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
-
+import { sign } from "jsonwebtoken";
 export default class UsersController {
   public async getUsers(auth, ctx: HttpContextContract) {
     var result = await User.all();
@@ -29,28 +29,24 @@ export default class UsersController {
         rules.unique({ table: "users", column: "email" }),
       ]),
       password: schema.string([rules.minLength(8)]),
+      userName: schema.string([rules.minLength(4)]),
+      phoneNumber: schema.string(),
     });
 
     const payload = await request.validate({ schema: createSchema });
-
     const user = new User();
     user.email = payload.email;
     user.password = payload.password;
+    user.userName = payload.userName;
+    user.phoneNumber = payload.phoneNumber;
 
     await user.save();
-    const token = await auth.attempt(payload.email, payload.password);
+    const token = await auth
+      .use("api")
+      .attempt(payload.email, payload.password);
 
     return token;
-    // const signUp = schema.create({
-    //   // user_name: schema.string(),
-    //   email: schema.string([
-    //     rules.email(),
-    //     rules.unique({ table: "users", column: "email" }),
-    //   ]),
-    //   password: schema.string([rules.minLength(8)]),
-    //   // phone_number: schema.string(),
-    //   // country: schema.string(),
-    // });
+
     // const payload = await request.validate({ schema: signUp });
     // const user = new User();
     // // user.userName = payload.user_name;
@@ -65,13 +61,42 @@ export default class UsersController {
     // return token;
   }
 
-  public async updateProfile(ctx: HttpContextContract) {
-    var authId = await ctx.auth.authenticate();
-    var result = await User.findOrFail(authId.id);
-    await result.delete();
-    return { message: "The Users has been deleted!" };
-  }
+  public async update(ctx: HttpContextContract) {
+    const newSchema = schema.create({
+      password: schema.string(),
+    });
 
+    const fields = await ctx.request.validate({
+      schema: newSchema,
+    });
+
+    var authobject = await ctx.auth.authenticate();
+
+    var user = await User.findOrFail(authobject.id);
+
+    user.password = fields.password;
+
+    var newUser = await user.save();
+
+    const token = sign({ userId: authobject.id }, "your-secret-key");
+
+    return ctx.response.json({
+      token: token,
+      type: "Bearer",
+    });
+  }
+  public async loginemail({ request, response, auth }: HttpContextContract) {
+    var object = request.all();
+    var email = object.email;
+    try {
+      await email;
+      response.type("json");
+      return { email };
+    } catch (error) {
+      response.type("json");
+      return { success: false, message: "Invalid email " };
+    }
+  }
   public async destroy(ctx: HttpContextContract) {
     var id = ctx.params.id;
     var user = await User.findOrFail(id);

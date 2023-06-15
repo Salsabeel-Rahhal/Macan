@@ -35,7 +35,16 @@ export default class Shop extends BaseModel {
   public foodType: string;
 
   @column({ serializeAs: "work_time" })
-  public workTime: DateTime;
+  public workTime: string;
+
+  @column({ serializeAs: "price_range" })
+  public priceRange: string;
+
+  @column({ serializeAs: "rating" })
+  public rating: string;
+
+  @column({ serializeAs: "image" })
+  public image: string;
 
   @column({ serializeAs: "shop_menu_id" })
   public menuId: number;
