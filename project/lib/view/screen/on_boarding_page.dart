@@ -137,7 +137,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                               if (currentIndex < onBoardingList.length - 1) {
                                 _controller.nextPage(
                                     duration: const Duration(milliseconds: 900),
-                                    curve: Curves.decelerate);
+                                    curve: Curves.easeInOut);
                               } else {
                                 Navigator.push(
                                     context,

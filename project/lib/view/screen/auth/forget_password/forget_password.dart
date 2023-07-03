@@ -1,3 +1,4 @@
+import 'package:email_otp/email_otp.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:project/view/screen/auth/forget_password/verfication_page.dart';
@@ -20,17 +21,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   bool isObsecure = true;
   final _keyForm = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  EmailOTP myAuth = EmailOTP();
 
   _handleCheckAction() async {
     if (_keyForm.currentState != null && _keyForm.currentState!.validate()) {
+      myAuth.setConfig(
+          appEmail: "salsabeel.rahhal14@gmail.com",
+          appName: "Email OTP MACAN",
+          userEmail: emailController.text,
+          otpLength: 5,
+          otpType: OTPType.digitsOnly);
+
       String email = emailController.text;
-      ;
-      User user = User(email: email, password: null);
+      User user = User(email: email);
       EasyLoading.show(status: "Loading");
       UserController().getemail(user).then((value) {
         EasyLoading.dismiss();
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => VerficationPage()));
+            MaterialPageRoute(builder: (context) => const VerficationPage()));
       }).catchError((ex) {
         EasyLoading.dismiss();
         EasyLoading.showError(ex.toString());
@@ -74,6 +82,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             labelText: "",
             iconData: Icons.email_outlined,
             controller: emailController,
+            isobscureText: false,
           ),
           const SizedBox(
             height: 20,
@@ -81,7 +90,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           CustomButtonAuth(
               width: 150,
               text: "32".tr,
-              onPressed: () {
+              onPressed: () async {
                 _handleCheckAction();
               }),
           const SizedBox(

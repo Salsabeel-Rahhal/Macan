@@ -1,13 +1,14 @@
+import 'package:email_otp/email_otp.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:project/view/screen/auth/forget_password/reset_password.dart';
 import 'package:project/view/widget/auth/custom_button_auth.dart';
-import 'package:project/controller/auth/verfication_controller.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:project/view/widget/auth/custom_text.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:lottie/lottie.dart';
 
 class VerficationPage extends StatefulWidget {
   const VerficationPage({super.key});
@@ -17,7 +18,7 @@ class VerficationPage extends StatefulWidget {
 }
 
 class _VerficationPageState extends State<VerficationPage> {
-  final controller = VerifyCodeControllerImp();
+  // final controller = VerifyCodeControllerImp();
 
   Timer? _timer;
   int _remainingTime = 60;
@@ -42,27 +43,20 @@ class _VerficationPageState extends State<VerficationPage> {
   }
 
   void _resendCode() {
-    // reset remaining time to 60 seconds
     _remainingTime = 60;
-
-    // start the timer again
     _startTimer();
-
-    // TODO: send a new verification code
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const SizedBox(
-            height: 40,
-          ),
+          LottieBuilder.asset('assets/animations/f20.json'),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
             children: [
               GradientText("33".tr, colors: const [
                 Color.fromARGB(255, 74, 20, 140),
@@ -75,15 +69,12 @@ class _VerficationPageState extends State<VerficationPage> {
               )
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
           Column(children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   OtpTextField(
                     fieldWidth: 50,
@@ -108,24 +99,23 @@ class _VerficationPageState extends State<VerficationPage> {
                               ],
                             ),
                             borderRadius: BorderRadius.circular(20))),
-                    //set to true to show as box or false to show as dash
                     showFieldAsBox: true,
-                    //runs when a code is typed in
-                    onCodeChanged: (String code) {
-                      //handle validation or checks here
-                    },
-                    //runs when every textfield is filled
+                    onCodeChanged: (String code) {},
                     onSubmit: (String verificationCode) {
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (context) {
-                      //       return AlertDialog(
-                      //         title: Text("Verification Code "),
-                      //         content:
-                      //             Text("Code entered is $verificationCode"),
-                      //       );
-                      //     });
-                      controller.goToResetPassword();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Verification Code "),
+                              content:
+                                  Text("Code entered is $verificationCode"),
+                            );
+                          });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPage(),
+                          ));
                     }, // end onSubmit
                   ),
                 ],
@@ -143,22 +133,19 @@ class _VerficationPageState extends State<VerficationPage> {
                 ),
                 Text(
                   "$_remainingTime",
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey, fontSize: 15),
                 )
               ],
             ),
-            const SizedBox(
-              height: 80,
-            ),
-            CustomButtonAuth(
-                width: 200,
-                text: "10".tr,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ResetPage()));
-                })
+            // CustomButtonAuth(
+            //     width: 200,
+            //     text: "10".tr,
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const ResetPage()));
+            //     })
           ]),
         ]),
       ),

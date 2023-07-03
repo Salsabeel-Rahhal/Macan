@@ -37,15 +37,27 @@ class UserController {
     }
   }
 
-  Future<User> update(
-      {required String email,
-      required String password,
-      required String username}) async {
+  Future<User> update({
+    required String email,
+    required String userName,
+  }) async {
     try {
-      var result = await ApiHelper().putRequest("users", {
+      var result = await ApiHelper().putRequest("/users", {
         "email": email,
+        "userName": userName,
+      });
+      return User.fromJson(result);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<User> updatePassword({
+    required String password,
+  }) async {
+    try {
+      var result = await ApiHelper().putRequest("/users/pass", {
         "password": password,
-        "username": username,
       });
       return User.fromJson(result);
     } catch (e) {
@@ -55,8 +67,8 @@ class UserController {
 
   Future<User> getUser() async {
     try {
-      var result = await ApiHelper().getRequest("users");
-      return User.fromJson(result);
+      var result = await ApiHelper().getRequest("users/me");
+      return User.fromJson1(result);
     } catch (e) {
       rethrow;
     }
@@ -65,7 +77,7 @@ class UserController {
   Future<bool> getemail(User user) async {
     try {
       dynamic jsonObject =
-          await ApiHelper().postRequest("api/users/email", user.tojsonemail());
+          await ApiHelper().postRequest("users/loginemail", user.tojsonemail());
       String type = jsonObject["email"];
 
       var storage = const FlutterSecureStorage();
@@ -73,7 +85,7 @@ class UserController {
 
       return true;
     } catch (ex) {
-      print(ex);
+      print("hi");
       rethrow;
     }
   }

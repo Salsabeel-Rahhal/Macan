@@ -37,6 +37,13 @@ class User {
     };
   }
 
+  factory User.fromJson1(Map<String, dynamic> json) {
+    return User(
+      userName: json['userName'],
+      email: json['email'],
+    );
+  }
+
   factory User.fromQuery(QueryDocumentSnapshot<Object?> json) {
     return User(
       password: json["password"] ?? "",

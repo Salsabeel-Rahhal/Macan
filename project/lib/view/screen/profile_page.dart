@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project/view/screen/setting_page.dart';
-import 'package:project/view/widget/auth/custom_text.dart';
-import 'package:project/view/widget/auth/custom_text_form_auth.dart';
 
 import '../../controller/user_controller.dart';
-import '../../data/model/user_model.dart';
-import '../widget/bars/my_app_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,10 +16,28 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _controllerUsername = TextEditingController();
   final _controllerEmail = TextEditingController();
-  final _controllerPassword = TextEditingController();
+  final _controllerPhone = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   bool showPassword = false;
+
+  _handleSubmitAction() {
+    if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: "Loading");
+      UserController()
+          .update(
+        email: _controllerEmail.text,
+        userName: _controllerUsername.text,
+      )
+          .then((value) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess("Done");
+      }).catchError((ex) {
+        EasyLoading.dismiss();
+        EasyLoading.showError(ex.toString());
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +78,16 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           child: ListView(
             children: [
+              Container(
+                height: 150,
+                width: 60,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 4),
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/profile2.jpg"),
+                        fit: BoxFit.fitWidth)),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -82,11 +107,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      buildTextField("UserName", "salsabeel", false),
                       buildTextField("Email", "sa@gmail.com", false),
+                      buildTextField("UserName", "salsabeel", false),
                       buildTextField("Password", "********", true),
                       buildTextField("Phone Number", "1234567890", false),
-                      buildTextField("Country", "Jordan", false),
                     ],
                   )),
               const SizedBox(
@@ -137,7 +161,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15)),
                     child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          _handleSubmitAction();
+                        },
                         child: const Text(
                           "Save",
                           style: TextStyle(

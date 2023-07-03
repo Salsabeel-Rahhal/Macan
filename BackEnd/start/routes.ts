@@ -1,4 +1,5 @@
 import Route from "@ioc:Adonis/Core/Route";
+
 Route.group(() => {
   Route.get("/", "MenuItemCategoriesController.getMenuCategory");
   Route.get("/:id", "MenuItemCategoriesController.getId");
@@ -33,10 +34,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get("/", "ShopsController.getShops");
-  Route.get("/:id", "ShopsController.getId");
-  Route.post("/", "ShopsController.create");
-  Route.put("/:id", "ShopsController.update");
-  Route.delete("/:id", "ShopsController.destroy");
+  Route.get("/search", "ShopController.Search");
+  Route.get("/:id", "ShopController.getId");
 }).prefix("/shop");
 
 Route.group(() => {
@@ -49,8 +48,11 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get("/", "UsersController.getUsers");
+  Route.get("/me", "UsersController.getMe");
   Route.post("/signUp", "UsersController.signUp");
   Route.post("/signIn", "UsersController.signIn");
+  Route.post("/loginemail", "UsersController.loginemail");
   Route.put("/", "UsersController.update");
+  Route.put("/pass", "UsersController.updatePassword");
   Route.delete("/:id", "UsersController.destroy");
 }).prefix("/users");

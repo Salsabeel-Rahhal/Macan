@@ -5,11 +5,11 @@ import 'package:project/core/localization/change_locals.dart';
 import 'package:project/services/my_services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project/view/screen/auth/sign_in_page.dart';
-import 'package:project/view/screen/map_page.dart';
+import 'package:project/view/screen/profile_page.dart';
 import 'package:project/view/screen/shops.dart';
-import 'package:project/view/screen/resrvations_page.dart';
 import 'package:project/view/screen/test.dart';
 import 'core/localization/translation.dart';
+import 'package:project/view/screen/language.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         locale: controller.language,
         builder: EasyLoading.init(),
         theme: controller.appTheme,
-        home: profile());
+        home: LanguagePage());
   }
 }
 
@@ -47,7 +47,7 @@ class _SplachPageState extends State<SplachPage> {
     super.initState();
     Future.delayed(const Duration(seconds: 6)).then((value) =>
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => ShopPage())));
+            MaterialPageRoute(builder: (context) => const ShopPage())));
   }
 
   @override

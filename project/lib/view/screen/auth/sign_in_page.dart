@@ -10,7 +10,6 @@ import '../../widget/bars/my_app_bar.dart';
 import '../../../controller/user_controller.dart';
 import 'forget_password/forget_password.dart';
 import 'package:flutter/material.dart';
-import '../home_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -35,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
         UserController().signIn(email, password);
         EasyLoading.dismiss();
 
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const SplachPage()),
         );

@@ -14,7 +14,6 @@ class ResetPage extends StatefulWidget {
 }
 
 class _ResetPageState extends State<ResetPage> {
-  final controller = ResetPasswordControllerImp();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +64,10 @@ class _ResetPageState extends State<ResetPage> {
               width: 200,
               text: "39".tr,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SuccessReset()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SuccessReset()));
               })
         ]),
       ),

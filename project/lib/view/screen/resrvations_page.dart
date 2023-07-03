@@ -47,7 +47,8 @@ class ReservationPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25.0),
                     child: Image(
-                      image: NetworkImage(shopImageUrl[shopList1[7]].image),
+                      image:
+                          NetworkImage(shopImageUrl[shopList1[7] ?? 0].image),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -241,9 +242,9 @@ class ReservationPage extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                const Text(
-                  "Price Range",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                Text(
+                  "55".tr,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 const SizedBox(
                   width: 10,
@@ -278,9 +279,9 @@ class ReservationPage extends StatelessWidget {
                     );
                     await launchUrl(url);
                   },
-                  child: const Text(
-                    "Call Now",
-                    style: TextStyle(
+                  child: Text(
+                    "56".tr,
+                    style: const TextStyle(
                         fontSize: 14,
                         letterSpacing: 2.2,
                         color: Colors.black,

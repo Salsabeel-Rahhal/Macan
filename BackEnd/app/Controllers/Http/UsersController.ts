@@ -1,9 +1,17 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { schema, rules, validator } from "@ioc:Adonis/Core/Validator";
+const { use } = require("@adonisjs/core");
 import User from "App/Models/User";
 import { sign } from "jsonwebtoken";
 export default class UsersController {
+  async getMe({ auth }: HttpContextContract) {
+    var authObject = await auth.authenticate();
+    var user = await User.findOrFail(authObject.id);
+    return user;
+  }
   public async getUsers(auth, ctx: HttpContextContract) {
+    const { otp } = require("adonis-otp");
+    const User = use("App/Models/User");
     var result = await User.all();
     return result;
   }
@@ -46,22 +54,40 @@ export default class UsersController {
       .attempt(payload.email, payload.password);
 
     return token;
-
-    // const payload = await request.validate({ schema: signUp });
-    // const user = new User();
-    // // user.userName = payload.user_name;
-    // user.email = payload.email;
-    // user.password = payload.password;
-    // // user.phoneNumber = payload.phone_number;
-    // // user.country = payload.country;
-    // var newUser = await user.save();
-    // const token = await auth
-    //   .use("api")
-    //   .attempt(payload.email, payload.password);
-    // return token;
   }
 
-  public async update(ctx: HttpContextContract) {
+  async update({ auth, request, response }: HttpContextContract) {
+    try {
+      var authObject = await auth.authenticate();
+
+      const createSchema = schema.create({
+        email: schema.string([rules.email()]),
+        userName: schema.string([rules.minLength(2)]),
+      });
+
+      const payload = await request.validate({ schema: createSchema });
+      const user = await User.findOrFail(authObject.id);
+      user.userName = payload.userName;
+      user.email = payload.email;
+      if (
+        request.input("password") &&
+        request.input("password").toString().length > 0
+      ) {
+        user.password = request.input("password");
+      }
+
+      await user.save();
+      return response.json({
+        email: user.email,
+        userName: user.userName,
+      });
+    } catch (ex) {
+      console.log(ex);
+      return response.badRequest({ message: ex.toString() });
+    }
+  }
+
+  public async updatePassword(ctx: HttpContextContract) {
     const newSchema = schema.create({
       password: schema.string(),
     });

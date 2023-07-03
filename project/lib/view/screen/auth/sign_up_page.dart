@@ -1,7 +1,9 @@
+import 'package:email_otp/email_otp.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
+import 'package:project/view/screen/auth/success_sign_up.dart';
 import '../../../controller/user_controller.dart';
 import '../../../data/model/user_model.dart';
 import '../../../main.dart';
@@ -20,6 +22,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  EmailOTP myAuth = EmailOTP();
   bool _isObscure = false;
   final _keyForm = GlobalKey<FormState>();
   final _controllerUserName = TextEditingController();
@@ -42,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SplachPage()),
+          MaterialPageRoute(builder: (context) => SuccessSignUp()),
         );
         // return true; // sign-in was successful
       } catch (ex) {
@@ -142,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     FloatingLabelBehavior.always,
                                 label: Text(
                                   "18".tr,
-                                  style: TextStyle(fontSize: 15),
+                                  style: const TextStyle(fontSize: 15),
                                 ),
                                 hintText: "19".tr,
                                 hintStyle: const TextStyle(fontSize: 15),
@@ -241,7 +244,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     child: Text(
                       "23".tr,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                       ),

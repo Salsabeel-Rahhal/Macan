@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
-import 'package:project/view/screen/profile_page.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key, required this.textController});
@@ -12,19 +11,17 @@ class HomeAppBar extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           centerTitle: true,
+          leading: IconButton(
+              onPressed: () {
+                // Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+                size: 25,
+              )),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                  size: 25,
-                )),
-          ],
         ),
         body: ClipPath(
           clipper: MyCustomClipper(),
@@ -59,11 +56,6 @@ class HomeAppBar extends StatelessWidget {
                                   vertical: 8, horizontal: 30),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
-                              // label: const Text(
-                              //   "search",
-                              //   style: TextStyle(
-                              //       fontSize: 15, color: Colors.black),
-                              // ),
                               hintText: "search ",
                               hintStyle: const TextStyle(
                                   fontSize: 15, color: Colors.black),

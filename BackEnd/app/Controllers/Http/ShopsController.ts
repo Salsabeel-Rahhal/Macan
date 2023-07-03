@@ -22,4 +22,34 @@ export default class ShopsController {
     var result = await Shop.findOrFail(id);
     return result;
   }
+  // public async Search(ctx: HttpContextContract) {
+  //   try {
+  //     const { searchTerm } = ctx.request.qs();
+  //     const query = Shop.query().orWhere(
+  //       "shop_name",
+  //       "LIKE",
+  //       `%${searchTerm}%`
+  //     );
+  //     // const shops = query.select("*");
+  //     return ctx.response.json(query);
+  //   } catch (error) {
+  //     console.error(error);
+  //     return ctx.response
+  //       .status(500)
+  //       .send("An error occurred during the search.");
+  //   }
+  // }
+  public async search({ request, response }: HttpContextContract) {
+    try {
+      const searchTerm = request.qs();
+      const shops = await Shop.query()
+        .select("shop_name")
+        .where("shop_name", "LIKE", `%${searchTerm}%`);
+
+      return response.json(shops);
+    } catch (error) {
+      console.error(error);
+      return response.status(500).send("An error occurred during the search.");
+    }
+  }
 }

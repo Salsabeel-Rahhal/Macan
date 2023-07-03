@@ -5,6 +5,7 @@ import 'package:project/providers/shop_provider.dart';
 import 'package:project/view/screen/profile_page.dart';
 import 'package:project/view/screen/resrvations_page.dart';
 import 'package:project/view/screen/setting_page.dart';
+import 'package:project/view/screen/test.dart';
 import 'package:project/view/widget/alert_exit_app.dart';
 import 'package:provider/provider.dart';
 import '../../controller/shops_controller.dart';
@@ -160,7 +161,6 @@ class _ShopPageState extends State<ShopPage> {
                 String contactNumber = shop.contactNumber!;
                 int myIndex = index;
                 print(myIndex);
-
                 Get.to(ReservationPage(
                   shopList1: [
                     shopName,
@@ -277,10 +277,8 @@ class _ShopPageState extends State<ShopPage> {
             ),
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfilePage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyProfilePage()));
                 },
                 icon: const Icon(
                   Icons.account_circle_rounded,

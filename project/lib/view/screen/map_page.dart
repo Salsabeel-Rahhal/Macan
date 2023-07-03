@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/view/widget/search.dart';
 
@@ -47,7 +50,7 @@ class MapPageState extends State<MapPage> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 15.0),
                                 border: InputBorder.none,
-                                hintText: 'Search',
+                                hintText: '53'.tr,
                                 suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -111,18 +114,6 @@ class MapPageState extends State<MapPage> {
     );
   }
 
-  Future<void> _minus(double zoomVal) async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(40.712776, -74.005974), zoom: zoomVal)));
-  }
-
-  Future<void> _plus(double zoomVal) async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(40.712776, -74.005974), zoom: zoomVal)));
-  }
-
   Widget _buildGoogleMap(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
@@ -130,7 +121,7 @@ class MapPageState extends State<MapPage> {
       child: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition:
-            CameraPosition(target: LatLng(40.712776, -74.005974), zoom: 12),
+            CameraPosition(target: LatLng(31.996387, 35.853354), zoom: 12),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
@@ -139,6 +130,12 @@ class MapPageState extends State<MapPage> {
         },
       ),
     );
+  }
+
+  void getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position);
   }
 
   Future<void> _gotoLocation(double lat, double long) async {

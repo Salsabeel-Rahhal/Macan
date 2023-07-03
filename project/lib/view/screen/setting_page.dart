@@ -6,7 +6,6 @@ import 'package:project/view/screen/auth/forget_password/reset_password.dart';
 import 'package:project/view/screen/auth/sign_in_page.dart';
 import 'package:project/view/screen/language.dart';
 import 'package:project/view/widget/auth/custom_text.dart';
-
 import '../widget/alert_exit_app.dart';
 import '../widget/bars/my_app_bar.dart';
 
@@ -25,6 +24,20 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 20,
+            )),
+      ),
       body: Container(
         padding: const EdgeInsets.only(left: 16, right: 16),
         height: double.infinity,
@@ -39,9 +52,9 @@ class _SettingPageState extends State<SettingPage> {
             Row(
               children: [
                 LottieBuilder.asset('assets/animations/f7.json'),
-                const Text(
-                  "Settings",
-                  style: TextStyle(
+                Text(
+                  "57".tr,
+                  style: const TextStyle(
                     fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -54,17 +67,17 @@ class _SettingPageState extends State<SettingPage> {
               height: 10,
             ),
             Row(
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.person,
                   color: Colors.white,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  " Account",
-                  style: TextStyle(
+                  "58".tr,
+                  style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
@@ -81,67 +94,67 @@ class _SettingPageState extends State<SettingPage> {
             const SizedBox(
               height: 10,
             ),
-            buildAccountOptionRow(context, "Change Password", [
+            buildAccountOptionRow(context, "59".tr, [
               CustomText(
-                textTwo: "Go to reset password",
+                textTwo: "60".tr,
                 onTap1: const ResetPage(),
               )
             ]),
-            buildAccountOptionRow(context, "Social & Share App", [
+            buildAccountOptionRow(context, "61".tr, [
               TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.facebook),
-                  label: const Text("Facebbook")),
+                  label: Text("62".tr)),
               TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.telegram),
-                  label: const Text("Telegram")),
+                  label: Text("63".tr)),
               TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.tiktok),
-                  label: const Text("TikTok")),
+                  label: Text("64".tr)),
             ]),
-            buildAccountOptionRow(context, "Language", [
+            buildAccountOptionRow(context, "65".tr, [
               CustomText(
-                textTwo: "Go to change language",
+                textTwo: "66".tr,
                 onTap1: const LanguagePage(),
               )
             ]),
-            buildAccountOptionRow(context, "Help", [
+            buildAccountOptionRow(context, "67".tr, [
               CustomText(
-                textTwo: "Help Center",
+                textTwo: "68".tr,
               ),
               CustomText(
-                textTwo: "Contact Support",
+                textTwo: "69".tr,
               ),
               CustomText(
-                textTwo: "Permissions",
+                textTwo: "70".tr,
               )
             ]),
             const SizedBox(
               height: 40,
             ),
             Row(
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.volume_up_outlined,
                   color: Colors.white,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  " Notifications",
-                  style: TextStyle(
+                  "71".tr,
+                  style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 )
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             const Divider(
               height: 15,
               thickness: 2,
@@ -149,45 +162,45 @@ class _SettingPageState extends State<SettingPage> {
             const SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("New for you"),
-            buildNotificationOptionRow("Account activity"),
+            buildNotificationOptionRow("72".tr),
+            buildNotificationOptionRow("73".tr),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 25),
-                  padding: const EdgeInsets.all(7),
-                  width: 120,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            spreadRadius: 1.5,
-                            blurRadius: 12,
-                            color: Colors.black.withOpacity(0.5),
-                            offset: const Offset(2, 12)),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: InkWell(
-                      onTap: () {
-                        alertExitApp();
-                      },
-                      child: const Text(
-                        "Sign Out",
-                        style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      )),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Container(
+            //       margin: const EdgeInsets.only(top: 25),
+            //       padding: const EdgeInsets.all(7),
+            //       width: 120,
+            //       height: 40,
+            //       decoration: BoxDecoration(
+            //           boxShadow: [
+            //             BoxShadow(
+            //                 spreadRadius: 1.5,
+            //                 blurRadius: 12,
+            //                 color: Colors.black.withOpacity(0.5),
+            //                 offset: const Offset(2, 12)),
+            //           ],
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(15)),
+            //       child: InkWell(
+            //           onTap: () {
+            //             alertExitApp();
+            //           },
+            //           child: const Text(
+            //             "Sign Out",
+            //             style: TextStyle(
+            //                 fontSize: 14,
+            //                 letterSpacing: 2.2,
+            //                 color: Colors.black,
+            //                 fontWeight: FontWeight.bold),
+            //             textAlign: TextAlign.center,
+            //           )),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -203,7 +216,7 @@ class _SettingPageState extends State<SettingPage> {
           style: const TextStyle(
               fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white70),
         ),
-        SwitchExample(),
+        const SwitchExample(),
       ],
     );
   }
@@ -231,9 +244,9 @@ class _SettingPageState extends State<SettingPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        "Close",
-                        style: TextStyle(
+                      child: Text(
+                        "74".tr,
+                        style: const TextStyle(
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w600),
                       ))
